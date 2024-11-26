@@ -1,53 +1,43 @@
 export default class map{
-  constructor(gameWidth,gameHeight){
+  constructor(gameWidth,gameHeight,imgId, tileArray,imgWidth = 32,imgHeight = 32 ){
     this.gameHeight =gameHeight
     this.gameWidth =gameWidth
 
-    this.img = document.querySelector("#floor2");
-    console.log(this.img.height,this.img.width)
+    this.img = document.querySelector(imgId);
 
-    this.img2 = document.querySelector("#chair");
+    this.imgHeight = imgWidth;
+    this.imgWidth = imgHeight;
 
-    this.img2Height = 32;
-    this.img2Width = 32;
+    this.row = this.img.height/this.imgHeight;
+    this.col = this.img.width/this.imgWidth;
 
-    this.row2 = this.img2.height/32;
-    this.col2 = this.img2.width/32;
-
-
-    this.img3 = document.querySelector("#table");
-
-    this.img3Height = 32;
-    this.img3Width = 32;
-
-    this.row3 = this.img3.height/32;
-    this.col3 = this.img3.width/32;
-
-    this.imgHeight = 32;
-    this.imgWidth = 32;
-
-    this.row = this.img.height/32;
-    this.col = this.img.width/32;
-
+    this.arr = tileArray;
+    /*
     this.arr = [
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     ];
+    */
   }
   draw(context,canvX,canvY,canvW,canvH){
     //drawImage(img, imgx, imgy, imgw, imgh, dx, dy, dw, dh)
     //row , height -> px,px
-    document.querySelector("#canvasPops").innerHTML = `${canvX},${canvY},${canvW},${canvH},${this.row},${this.col}`;
-    for(let row = Math.floor(canvY/this.row);row<10;row++){ //
-      for (let col = Math.floor(canvX/this.col); col<15; col++) {
+    document.querySelector("#canvasPops").innerHTML = `canvX->${canvX},canvy${canvY},canvw${canvW},canvh${canvH},row${this.row},col${this.col}
+    \n
+    ${Math.floor(canvY/this.imgHeight)}->${canvH/this.imgHeight}\n
+    ${Math.floor(canvX/this.imgWidth)}->${canvW/this.imgWidth}
+    `;
+
+    for(let row = Math.floor(canvY/this.imgHeight);row<(canvY + canvH)/this.imgHeight;row++){ 
+      for (let col = Math.floor(canvX/this.imgWidth); col<(canvX + canvW)/this.imgWidth; col++) {
         const tileNo = this.arr[row][col];
         const x = (tileNo%this.col) ;
         const y = Math.floor(tileNo/this.col);
@@ -57,7 +47,7 @@ export default class map{
           x*32,y*32,
           this.imgWidth,this.imgHeight,
 
-          (col - Math.floor(canvX/this.col) )* this.imgWidth,(row-Math.floor(canvY/this.row))* this.imgHeight,
+          (col - Math.floor(canvX/this.imgWidth) )* this.imgWidth,(row-Math.floor(canvY/this.imgHeight))* this.imgHeight,
           this.imgWidth,this.imgHeight);
       }
     }

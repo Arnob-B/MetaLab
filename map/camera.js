@@ -13,14 +13,16 @@ export default class Camera {
     this.update(0,0);
   }
   update(speedx, speedy){
-    document.querySelector("#camera").innerHTML =`x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}` 
-    this.speedx=speedx * this.speedFactor;
+    this.speedx=speedx*this.speedFactor;
     this.speedy=speedy*this.speedFactor;
-    /*
-      this.x = this.x + this.speedx * this.speedFactor;
-      this.y = this.y + this.speedy * this.speedFactor;
-      */
-      this.x = Math.min(this.x + this.speedx , this.gameWidth-this.canvasWidth);
-      this.y = Math.min(this.y + this.speedy , this.gameHeight-this.canvasHeight);
+    document.querySelector("#camera").innerHTML = `x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}`
+
+    if (this.x + this.speedx >= 0 && this.x + this.speedx <= this.gameWidth - this.canvasWidth) {
+      if (this.y + this.speedy >= 0 && this.y + this.speedy <= this.gameHeight - this.canvasHeight) {
+        this.x = this.x + this.speedx;
+        this.y = this.y + this.speedy;
+        document.querySelector("#camera").innerHTML = `hit x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}`
+      }
+    }
   }
 }
