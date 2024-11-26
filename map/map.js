@@ -6,6 +6,23 @@ export default class map{
     this.img = document.querySelector("#floor2");
     console.log(this.img.height,this.img.width)
 
+    this.img2 = document.querySelector("#chair");
+
+    this.img2Height = 32;
+    this.img2Width = 32;
+
+    this.row2 = this.img2.height/32;
+    this.col2 = this.img2.width/32;
+
+
+    this.img3 = document.querySelector("#table");
+
+    this.img3Height = 32;
+    this.img3Width = 32;
+
+    this.row3 = this.img3.height/32;
+    this.col3 = this.img3.width/32;
+
     this.imgHeight = 32;
     this.imgWidth = 32;
 
@@ -24,10 +41,6 @@ export default class map{
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     ];
-    /*
-    this.imgHeight = this.img.height;
-    this.imgWidth = this.img.width;
-    */
   }
   draw(context,canvX,canvY,canvW,canvH){
     //drawImage(img, imgx, imgy, imgw, imgh, dx, dy, dw, dh)

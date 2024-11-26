@@ -44,6 +44,8 @@ export default class Game{
     );
     */
     this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
+    this.tableMap.draw2(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
+    this.tableMap.draw3(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     // this.drawGrid(ctx, 32);
   }
 }
