@@ -3,7 +3,7 @@ export default class map{
     this.gameHeight =gameHeight
     this.gameWidth =gameWidth
 
-    this.img = document.querySelector("#wallpaper");
+    this.img = document.querySelector("#floor");
     this.imgHeight = this.img.height;
     this.imgWidth = this.img.width;
     this.tileMap = [ // x and y

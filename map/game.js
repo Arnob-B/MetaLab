@@ -8,7 +8,7 @@ export default class Game{
     this.gameHeight =gameHeight
     this.gameWidth =gameWidth
     this.tableMap = new map(gameWidth, gameHeight);
-    this.camera = new Camera(gameWidth,gameHeight);
+    this.camera = new Camera(gameWidth,gameHeight, canvasWidth,canvasHeight);
 
 
 
@@ -24,22 +24,24 @@ export default class Game{
   drawGrid(ctx,size){
     for (let row = 0; row < this.gameWidth; row += size) {
       for (let col = 0; col < this.gameWidth; col += size){
-        ctx.drawRect(col, row,col + size, row + size );
+        ctx.strokeStyle  = "red"
+        ctx.strokeRect(col, row,col + size, row + size );
       }
     }
   }
   render(ctx){
-    ctx.drawImage(
-      this.tableMap.img,
-      this.camera.x,
-      this.camera.y,
-      this.canvasWidth,
-      this.canvasHeight,
-      0,
-      0,
-      this.gameWidth,
-      this.gameHeight
-    );
-    this.drawGrid(ctx, 64);
+    this.tableMap.fill(ctx);
+    // ctx.drawImage(
+    //   this.tableMap.img,
+    //   this.camera.x,
+    //   this.camera.y,
+    //   this.canvasWidth,
+    //   this.canvasHeight,
+    //   0,
+    //   0,
+    //   this.gameWidth,
+    //   this.gameHeight
+    // );
+    this.drawGrid(ctx, 32);
   }
 }
