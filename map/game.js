@@ -30,18 +30,21 @@ export default class Game{
     }
   }
   render(ctx){
-    this.tableMap.fill(ctx);
-    // ctx.drawImage(
-    //   this.tableMap.img,
-    //   this.camera.x,
-    //   this.camera.y,
-    //   this.canvasWidth,
-    //   this.canvasHeight,
-    //   0,
-    //   0,
-    //   this.gameWidth,
-    //   this.gameHeight
-    // );
+    // this.tableMap.fill(ctx);
+    /*
+    ctx.drawImage(
+      this.tableMap.img,
+      this.camera.x,
+      this.camera.y,
+      this.canvasWidth,
+      this.canvasHeight,
+      0,
+      0,
+      this.gameWidth,
+      this.gameHeight
+    );
+    */
+    this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     this.drawGrid(ctx, 32);
   }
 }
