@@ -9,16 +9,18 @@ export default class Camera {
 
     this.speedx = 0;
     this.speedy = 0;
-    this.speedFactor = 20;
+    this.speedFactor = 32;
+    this.update(0,0);
   }
   update(speedx, speedy){
-    this.speedx=speedx;
-    this.speedy=speedy;
+    document.querySelector("#camera").innerHTML =`x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}` 
+    this.speedx=speedx * this.speedFactor;
+    this.speedy=speedy*this.speedFactor;
     /*
       this.x = this.x + this.speedx * this.speedFactor;
       this.y = this.y + this.speedy * this.speedFactor;
       */
-      this.x = Math.min(this.x + this.speedx * this.speedFactor, this.gameWidth-this.canvasWidth);
-      this.y = Math.min(this.y + this.speedy * this.speedFactor, this.gameHeight-this.canvasHeight);
+      this.x = Math.min(this.x + this.speedx , this.gameWidth-this.canvasWidth);
+      this.y = Math.min(this.y + this.speedy , this.gameHeight-this.canvasHeight);
   }
 }

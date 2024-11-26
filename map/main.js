@@ -1,10 +1,10 @@
 import Game from "./game.js";
-const gameWidth = 1980
-const gameHeight = 1200
+const gameWidth = 32* 15;
+const gameHeight = 32* 10; 
 window.addEventListener("load",()=>{
   const canvas = document.querySelector("#mainCanvas");
-  const canvasWidth = canvas.width = 32 * 15;
-  const canvasHeight = canvas.height = 32 * 10;
+  const canvasWidth = canvas.width = 32 * 7;
+  const canvasHeight = canvas.height = 32 * 7;
   const ctx = canvas.getContext("2d");
 
   const game = new Game(canvasWidth,canvasHeight,gameWidth,gameHeight);

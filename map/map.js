@@ -3,7 +3,7 @@ export default class map{
     this.gameHeight =gameHeight
     this.gameWidth =gameWidth
 
-    this.img = document.querySelector("#woodTile");
+    this.img = document.querySelector("#floor2");
     console.log(this.img.height,this.img.width)
 
     this.imgHeight = 32;
@@ -13,16 +13,16 @@ export default class map{
     this.col = this.img.width/32;
 
     this.arr = [
-      [42,42,42,42,1,1,1,1,1,1,1,1,1,1,42],
-      [42,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
-      [42,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,1,3,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,22,37,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [42,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [42,42,42,42,42,42,42,42,42,42,42,42,42,42,42],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     ];
     /*
     this.imgHeight = this.img.height;
@@ -33,8 +33,8 @@ export default class map{
     //drawImage(img, imgx, imgy, imgw, imgh, dx, dy, dw, dh)
     //row , height -> px,px
     document.querySelector("#canvasPops").innerHTML = `${canvX},${canvY},${canvW},${canvH},${this.row},${this.col}`;
-    for(let row = 0;row<10;row++){ //
-      for (let col = 0; col<15; col++) {
+    for(let row = Math.floor(canvY/this.row);row<10;row++){ //
+      for (let col = Math.floor(canvX/this.col); col<15; col++) {
         const tileNo = this.arr[row][col];
         const x = (tileNo%this.col) ;
         const y = Math.floor(tileNo/this.col);
@@ -44,7 +44,7 @@ export default class map{
           x*32,y*32,
           this.imgWidth,this.imgHeight,
 
-          col * this.imgWidth,row * this.imgHeight,
+          (col - Math.floor(canvX/this.col) )* this.imgWidth,(row-Math.floor(canvY/this.row))* this.imgHeight,
           this.imgWidth,this.imgHeight);
       }
     }

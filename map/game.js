@@ -24,7 +24,6 @@ export default class Game{
   drawGrid(ctx,size){
     for (let row = 0; row < this.gameWidth; row += size) {
       for (let col = 0; col < this.gameWidth; col += size){
-        ctx.strokeStyle  = "red"
         ctx.strokeRect(col, row,col + size, row + size );
       }
     }
@@ -45,6 +44,6 @@ export default class Game{
     );
     */
     this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    this.drawGrid(ctx, 32);
+    // this.drawGrid(ctx, 32);
   }
 }
