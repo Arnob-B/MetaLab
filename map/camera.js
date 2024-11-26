@@ -4,8 +4,7 @@ export default class Camera {
     this.gameHeight = gameHeight
     this.x = 0;
     this.y = 0;
-    this.height = 700;
-    this.width = 600;
+
     this.speedx = 0;
     this.speedy = 0;
     this.speedFactor = 7;

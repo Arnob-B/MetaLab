@@ -20,7 +20,13 @@ export default class Game{
     if (e.key === "ArrowLeft") this.camera.update(-1, 0);
   })
 
-
+  }
+  drawGrid(ctx,size){
+    for (let row = 0; row < this.gameWidth; row += size) {
+      for (let col = 0; col < this.gameWidth; col += size){
+        ctx.drawRect(col, row,col + size, row + size );
+      }
+    }
   }
   render(ctx){
     ctx.drawImage(
@@ -34,5 +40,6 @@ export default class Game{
       this.gameWidth,
       this.gameHeight
     );
+    this.drawGrid(ctx, 64);
   }
 }
