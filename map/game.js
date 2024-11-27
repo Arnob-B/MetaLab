@@ -1,5 +1,6 @@
 import map from "./map.js";
 import Camera from "./camera.js";
+import Player from "./player.js";
 export default class Game{
   constructor( canvasWidth,canvasHeight, gameWidth, gameHeight){
     console.log("game constructed");
@@ -45,6 +46,7 @@ export default class Game{
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     ]);
 
+    this.player = new Player(canvasHeight, canvasWidth);
 
 
 
@@ -68,6 +70,7 @@ export default class Game{
     this.floorMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     this.chairMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    //this.drawGrid(ctx, 32);
+    this.player.draw(ctx);
+    this.drawGrid(ctx, 32);
   }
 }
