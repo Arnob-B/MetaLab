@@ -7,7 +7,7 @@ export default class Camera {
     this.x = 0;
     this.y = 0;
 
-    this.speedx = 0;
+    this.speedx = 22;
     this.speedy = 0;
     this.speedFactor = 32;
     this.update(0,0);
@@ -16,7 +16,6 @@ export default class Camera {
     this.speedx=speedx*this.speedFactor;
     this.speedy=speedy*this.speedFactor;
     document.querySelector("#camera").innerHTML = `x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}`
-
     if (this.x + this.speedx >= 0 && this.x + this.speedx <= this.gameWidth - this.canvasWidth) {
       if (this.y + this.speedy >= 0 && this.y + this.speedy <= this.gameHeight - this.canvasHeight) {
         this.x = this.x + this.speedx;

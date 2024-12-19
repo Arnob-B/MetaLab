@@ -1,6 +1,6 @@
 import Game from "./game.js";
-const gameWidth = 32* 15;
-const gameHeight = 32* 10; 
+const gameWidth = 32*15;
+const gameHeight = 32*10; 
 window.addEventListener("load",()=>{
   const canvas = document.querySelector("#mainCanvas");
   const canvasWidth = canvas.width = 32 * 10;

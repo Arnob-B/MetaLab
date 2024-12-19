@@ -6,8 +6,8 @@ export default class Player{
 
         // placing player in the middle of the screen
         // this.x = canvasWidth/2 - this.width/2;
-        this.x = 0;
-        this.y=0;
+        this.x=2;
+        this.y=1;
         // this.y = canvasHeight/2 - this.height/2;
 
         // for spritesheet animations
@@ -18,13 +18,15 @@ export default class Player{
         this.img = document.getElementById("player");
     }
 
-    update(){
-        console.log("update");
+    update(x, y){
+      this.x = x;
+      this.y = y;
+        document.querySelector("#playerLog").innerHTML = ` x->${this.x},y->${this.y}`
     }
 
     draw(ctx){
         console.log("draw");
-        ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x, this.y, 32, 32);
+        ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x*this.width, this.y*this.height, 32, 32);
     }
 
 }

@@ -49,13 +49,18 @@ export default class Game{
     this.player = new Player(canvasHeight, canvasWidth);
 
 
-
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowUp") this.camera.update(0, -1);
       if (e.key === "ArrowDown") this.camera.update(0, 1);
       if (e.key === "ArrowRight") this.camera.update(1, 0);
       if (e.key === "ArrowLeft") this.camera.update(-1, 0);
     })
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "w") {console.log("w");this.player.update(0, -1);}
+        if (e.key === "a") {console.log("a");this.player.update(-1, 0);}
+        if (e.key === "s") {console.log("s");this.player.update(0, 1);}
+        if (e.key === "d") {console.log("d");this.player.update(1, 0);}
+      })
 
   }
   drawGrid(ctx,size){
