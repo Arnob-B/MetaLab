@@ -11,8 +11,8 @@ export default class Player{
         // this.y = canvasHeight/2 - this.height/2;
 
         // for spritesheet animations
-        this.frameX = 0;
-        this.frameY = 0;
+        this.frameX = 1;
+        this.frameY = 2;
 
         // player sprite
         this.img = document.getElementById("player");
