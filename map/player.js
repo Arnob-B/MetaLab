@@ -1,3 +1,4 @@
+import map from "./map.js"
 export default class Player{
     constructor(canvasHeight, canvasWidth){
         // 32 x 32 player
@@ -12,21 +13,31 @@ export default class Player{
 
         // for spritesheet animations
         this.frameX = 1;
-        this.frameY = 2;
+        this.frameY = 5;
 
         // player sprite
         this.img = document.getElementById("player");
     }
 
     update(x, y){
-      this.x = x;
-      this.y = y;
+      this.frameY = (this.frameY + 1)%5;
+      this.frameX = (this.frameX + 1)%5;
+      this.x += x;
+      this.y += y;
         document.querySelector("#playerLog").innerHTML = ` x->${this.x},y->${this.y}`
     }
 
-    draw(ctx){
+    draw(ctx,camera){
         console.log("draw");
-        ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x*this.width, this.y*this.height, 32, 32);
+
+      // drawImage(sourceimg, sourcx, source y, source width , source heigh, canvx, canvy, dispwidth, dispwidth)
+      if(((this.x*this.width >= camera.x )&& (this.x*this.width <= camera.x + camera.canvasWidth))
+        &&
+        ((this.y*this.height >=camera.y )&& (this.y*this.height <= camera.y + camera.canvasHeight))
+      )
+      {
+        console.log("here");
+        ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x*this.width - camera.x, this.y*this.height - camera.y, 32, 32);}
     }
 
 }

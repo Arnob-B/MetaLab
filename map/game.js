@@ -75,7 +75,7 @@ export default class Game{
     this.floorMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     this.chairMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
     this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    this.player.draw(ctx);
+    this.player.draw(ctx,this.camera);
     this.drawGrid(ctx, 32);
   }
 }

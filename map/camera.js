@@ -7,7 +7,7 @@ export default class Camera {
     this.x = 0;
     this.y = 0;
 
-    this.speedx = 22;
+    this.speedx = 0;
     this.speedy = 0;
     this.speedFactor = 32;
     this.update(0,0);
