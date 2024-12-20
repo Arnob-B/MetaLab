@@ -2,12 +2,13 @@ import map from "./map.js";
 import Camera from "./camera.js";
 import Player from "./player.js";
 export default class Game{
-  constructor( canvasWidth,canvasHeight, gameWidth, gameHeight){
+  constructor( {canvasWidth,canvasHeight, gameWidth, gameHeight,TILE_SIZE}){
     console.log("game constructed");
     this.canvasHeight = canvasHeight
     this.canvasWidth = canvasWidth
     this.gameHeight = gameHeight
     this.gameWidth = gameWidth
+    this.TILE_SIZE = TILE_SIZE
     this.camera = new Camera(gameWidth,gameHeight,canvasWidth,canvasHeight);
     this.floorMap = new map(gameWidth, gameHeight, "#floor2", [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -56,10 +57,10 @@ export default class Game{
       if (e.key === "ArrowLeft") this.camera.update(-1, 0);
     })
       document.addEventListener("keydown", (e) => {
-        if (e.key === "w") {console.log("w");this.player.update(0, -1);}
-        if (e.key === "a") {console.log("a");this.player.update(-1, 0);}
-        if (e.key === "s") {console.log("s");this.player.update(0, 1);}
-        if (e.key === "d") {console.log("d");this.player.update(1, 0);}
+        if (e.key === "w") {this.player.update(0, -1);}
+        if (e.key === "a") {this.player.update(-1, 0);}
+        if (e.key === "s") {this.player.update(0, 1);}
+        if (e.key === "d") {this.player.update(1, 0);}
       })
 
   }

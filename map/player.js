@@ -28,7 +28,7 @@ export default class Player{
     }
 
     draw(ctx,camera){
-        console.log("draw");
+        //console.log("draw");
 
       // drawImage(sourceimg, sourcx, source y, source width , source heigh, canvx, canvy, dispwidth, dispwidth)
       if(((this.x*this.width >= camera.x )&& (this.x*this.width <= camera.x + camera.canvasWidth))
@@ -36,7 +36,7 @@ export default class Player{
         ((this.y*this.height >=camera.y )&& (this.y*this.height <= camera.y + camera.canvasHeight))
       )
       {
-        console.log("here");
+        //console.log("here");
         ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x*this.width - camera.x, this.y*this.height - camera.y, 32, 32);}
     }
 

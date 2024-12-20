@@ -59,4 +59,10 @@ export default class map{
       }
     }
   }
+  newdraw(context,camera,tileSize){
+    const startCol = Math.floor(camera.x/tileSize);
+    const endCol = Math.floor((camera.x+camera.width)/tileSize);
+    const startRow = Math.floor(camera.y/tileSize);
+    const endRow = Math.floor((camera.y+camera.height)/tileSize);
+  }
 }
