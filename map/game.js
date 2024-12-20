@@ -1,3 +1,4 @@
+import Input from "./keyInput.js"
 import map from "./map.js";
 import Camera from "./camera.js";
 import Player from "./player.js";
@@ -49,7 +50,7 @@ export default class Game{
 
     this.player = new Player(canvasHeight, canvasWidth);
 
-
+    const input = new Input;
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowUp") this.camera.update(0, -1);
       if (e.key === "ArrowDown") this.camera.update(0, 1);
