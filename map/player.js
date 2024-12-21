@@ -1,43 +1,73 @@
-import map from "./map.js"
-export default class Player {
-  constructor(canvasHeight, canvasWidth) {
-    // 32 x 32 player
-    this.width = 32;
-    this.height = 32;
-
-    // placing player in the middle of the screen
-    // this.x = canvasWidth/2 - this.width/2;
-    this.x = 2;
-    this.y = 1;
-    // this.y = canvasHeight/2 - this.height/2;
-
-    // for spritesheet animations
-    this.frameX = 1;
-    this.frameY = 5;
-
-    // player sprite
-    this.img = document.getElementById("player");
-  }
-
-  update(x, y) {
-    this.frameY = (this.frameY + 1) % 5;
-    this.frameX = (this.frameX + 1) % 5;
-    this.x += x;
-    this.y += y;
-    document.querySelector("#playerLog").innerHTML = ` x->${this.x},y->${this.y}`
-  }
-
-  draw(ctx, camera) {
-    //console.log("draw");
-
-    // drawImage(sourceimg, sourcx, source y, source width , source heigh, canvx, canvy, dispwidth, dispwidth)
-    if (((this.x * this.width >= camera.x) && (this.x * this.width <= camera.x + camera.canvasWidth))
-      &&
-      ((this.y * this.height >= camera.y) && (this.y * this.height <= camera.y + camera.canvasHeight))
-    ) {
-      //console.log("here");
-      ctx.drawImage(this.img, this.frameX * 64, this.frameY * 64, 64, 64, this.x * this.width - camera.x, this.y * this.height - camera.y, 64, 64);
+import GameObject from "./GameObject.js";
+import Game from "./game.js";
+export default class Player extends GameObject {
+    constructor(canvasHeight, canvasWidth) {
+        super(2, 1, 64, 64, "player");
+        
+        // Player specific properties
+        this.gridX = 2;        // Current grid X position
+        this.gridY = 1;        // Current grid Y position
+        this.moveSpeed = 1;    // Grid cells per move
+        this.facingDirection = "down"; // Track player direction
+        // Animation frame mappings for each direction
+        this.animations = {
+            down:  { startRow: 0, frames: 5 },
+            left:  { startRow: 1, frames: 5 },
+            right: { startRow: 2, frames: 5 },
+            up:    { startRow: 3, frames: 5 },
+            idle:  { startRow: 0, frames: 1 }
+        };
+        
+        // Set initial animation state
+        this.frameY = this.animations.down.startRow;
     }
-  }
 
+    // Handle player movement and update animations
+    update(deltaX, deltaY) {
+        // Update grid position
+        if (deltaX !== 0 || deltaY !== 0) {
+            this.gridX += deltaX * this.moveSpeed;
+            this.gridY += deltaY * this.moveSpeed;
+            
+            // Update facing direction based on movement
+            if (deltaX > 0) this.facingDirection = "right";
+            else if (deltaX < 0) this.facingDirection = "left";
+            else if (deltaY > 0) this.facingDirection = "down";
+            else if (deltaY < 0) this.facingDirection = "up";
+            
+            // Set animation row based on direction
+            this.frameY = this.animations[this.facingDirection].startRow;
+            
+            // Call parent update with grid position and animation frames
+            super.update(
+                this.gridX, 
+                this.gridY, 
+                this.animations[this.facingDirection].frames,
+                1
+            );
+        } else {
+            // If not moving, show idle animation
+            this.frameY = this.animations.idle.startRow;
+            super.update(this.gridX, this.gridY, 1, 1);
+        }
+    }
+
+    // Optional: Add collision handling
+    handleCollision(gameObjects) {
+        for (let obj of gameObjects) {
+            if (this.intersects(obj)) {
+                // Handle collision response here
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Override draw to add any player-specific rendering
+    draw(context, camera) {
+        super.draw(context, camera);
+        
+        // Add any additional player-specific rendering here
+        // For example, drawing player name, health bar, etc.
+    }
 }
