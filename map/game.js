@@ -1,7 +1,8 @@
 import Input from "./keyInput.js"
-import map from "./map.js";
+import TileSet from "./TileSet.js";
 import Camera from "./camera.js";
 import Player from "./player.js";
+import CollisionMap from "./CollisionMap.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE }) {
     console.log("game constructed");
@@ -11,7 +12,7 @@ export default class Game {
     this.gameWidth = gameWidth // in px
     this.TILE_SIZE = TILE_SIZE // in px
     this.camera = new Camera(gameWidth, gameHeight, canvasWidth, canvasHeight);
-    this.floorMap = new map(gameWidth, gameHeight, "#floor2", [
+    this.floorMap = new TileSet(gameWidth, gameHeight, "#floor2", [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -23,7 +24,7 @@ export default class Game {
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]);
-    this.chairMap = new map(gameWidth, gameHeight, "#chair", [ // 1 based
+    this.chairMap = new TileSet(gameWidth, gameHeight, "#chair", [ // 1 based
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       [-1, 0, -1, 0, -1, -1, -1, -1, -1, 0, -1, 0, -1, 0, -1],
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -35,7 +36,7 @@ export default class Game {
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       [0, 0, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     ]);
-    this.tableMap = new map(gameWidth, gameHeight, "#table", [
+    this.tableMap = new TileSet(gameWidth, gameHeight, "#table", [
       [-1, 0, 1, 0, 1, -1, -1, -1, 0, 1, 0, 1, 0, 1],
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
@@ -46,6 +47,18 @@ export default class Game {
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
       [0, 1, -1, -1, -1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
+    ]);
+    this.collisionMap = new CollisionMap(gameWidth, gameHeight, [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]);
 
     this.player = new Player(canvasHeight, canvasWidth);
