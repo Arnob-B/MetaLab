@@ -35,7 +35,6 @@ export default class TileSet extends Map {
           this.img,
           x * 32, y * 32,
           this.imgWidth, this.imgHeight,
-
           (col - Math.floor(camera.x / this.imgWidth)) * this.imgWidth, (row - Math.floor(camera.y / this.imgHeight)) * this.imgHeight,
           this.imgWidth, this.imgHeight);
       }

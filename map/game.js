@@ -3,6 +3,8 @@ import TileSet from "./TileSet.js";
 import Camera from "./camera.js";
 import Player from "./player.js";
 import CollisionMap from "./CollisionMap.js";
+import DynamicOjbects from "./DynamicObject.js";
+import StaticObject from "./StaticObject.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
@@ -61,7 +63,7 @@ export default class Game {
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]);
 
-    //this.player = new Player(canvasHeight, canvasWidth);
+    this.player = new StaticObject("player", 1, 1, 64, 64);
 
     this.input = new Input;
     document.addEventListener("keydown", (e) => {
@@ -91,7 +93,7 @@ export default class Game {
     this.floorMap.draw(this.camera);
     this.chairMap.draw(this.camera);
     this.tableMap.draw(this.camera);
-    //this.player.draw(camera);
+    this.player.draw(this.camera);
     this.drawGrid(ctx, 32);
   }
 }

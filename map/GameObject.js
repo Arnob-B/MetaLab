@@ -1,12 +1,21 @@
+import vec2 from "./vec2.js";
+
 export default class GameObject {
-  constructor(x = 0, y = 0, width = 32, height = 32, spriteId = "") {
-    this.x = x * 32; // Convert grid position to pixels
-    this.y = y * 32;
+  constructor(spriteId = "", x = 0, y = 0, width = 32, height = 32, renderWidth = 32, renderHeight = 32, tileSize = 32) {
+    this.pos = new vec2(x, y);
+    this.x = x * tileSize; // Converted from grid to position to pixels
+    this.y = y * tileSize;
     this.width = width;
     this.height = height;
+    this.renderHeight = renderHeight;
+    this.TILESIZE = tileSize
+    this.renderWidth = renderWidth;
     this.sprite = document.querySelector(`#${spriteId}`);
+    this.maxFrameX = this.sprite.naturalWidth / this.width;
+    this.maxFrameY = this.sprite.naturalHeight / this.height;
 
     // Animation properties
+    this.i = 1;
     this.frameX = 0;
     this.frameY = 0;
     this.animationTimer = 0;
@@ -14,14 +23,20 @@ export default class GameObject {
     this.lastUpdate = Date.now();
 
     // Add boundary properties
-    this.maxX = 14; // GAME_WIDTH - 1
-    this.maxY = 9;  // GAME_HEIGHT - 1
+    //this.maxX = 14; // GAME_WIDTH - 1
+    //this.maxY = 9;  // GAME_HEIGHT - 1
   }
 
+  changeFrame() {
+    this.frameX = (this.frameX + 1) % this.maxFrameX;
+    this.frameY = (this.frameY + 1) % this.maxFrameY;
+  }
+  /*
   update(x, y, maxFrameX = 1, maxFrameY = 1) {
     // Boundary checking
     const newX = Math.max(0, Math.min(x, this.maxX));
     const newY = Math.max(0, Math.min(y, this.maxY));
+
 
     // Update position
     this.x = newX * 32;
@@ -44,14 +59,16 @@ export default class GameObject {
         this.frameY = (this.frameY + 1) % maxFrameY;
       }
     }
-
     return { x: newX, y: newY }; // Return the actual position after boundary checking
   }
+  */
 
-  draw(context, camera) {
+  draw(camera) {
     // Only draw if we have a valid sprite
     if (!this.sprite) return;
+    this.changeFrame();
 
+    this.frameX++;
     // Calculate screen position based on camera
     const screenX = this.x - camera.x;
     const screenY = this.y - camera.y;
@@ -65,7 +82,7 @@ export default class GameObject {
     }
 
     // Draw the current frame
-    context.drawImage(
+    camera.ctx.drawImage(
       this.sprite,
       this.frameX * this.width,
       this.frameY * this.height,
@@ -73,8 +90,8 @@ export default class GameObject {
       this.height,
       screenX,
       screenY,
-      this.width,
-      this.height
+      this.renderWidth,
+      this.renderHeight
     );
   }
 

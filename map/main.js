@@ -23,8 +23,10 @@ window.addEventListener("load", () => {
 
   let x = 0;
   const animate = () => {
-    ctx.clearRect(0, 0, canvasHeight, canvasWidth);
-    game.render(ctx);
+    if (x % 8 == 0) {
+      ctx.clearRect(0, 0, canvasHeight, canvasWidth);
+      game.render(ctx);
+    }
     requestAnimationFrame(animate);
     x++;
   }
