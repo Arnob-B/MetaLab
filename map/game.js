@@ -69,6 +69,7 @@ export default class Game {
     }.bind(this.obj);
     this.obj.frameSet("fall",func);
     this.obj.frameSet("jump",function(){
+      if(this.currentFrameKey === "jump" && this.frameX === 0) this.currentFrameKey = "";
       this.frameY = 2;
       this.maxFrameX = 7;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
