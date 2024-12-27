@@ -11,22 +11,12 @@ export default class TileSet extends Map {
 
     this.row = this.img.height / this.imgHeight; // in grids
     this.col = this.img.width / this.imgWidth; // in grids
-    console.log(this);
 
   }
 
   draw(camera) {
-    /*
-    console.log("camera", camera);
-    camera.ctx.drawImage(
-      this.img,
-      0, 0,
-      this.imgWidth, this.imgHeight,
-      0, 0,
-      camera.width, camera.height);
-    */
-    for (let row = Math.floor(camera.y / this.imgHeight); row < (camera.y + camera.height) / this.imgHeight; row++) {
-      for (let col = Math.floor(camera.x / this.imgWidth); col < (camera.x + camera.width) / this.imgWidth; col++) {
+    for (let row = Math.floor(camera.pos.y / this.imgHeight); row < (camera.pos.y + camera.height) / this.imgHeight; row++) {
+      for (let col = Math.floor(camera.pos.x / this.imgWidth); col < (camera.pos.x + camera.width) / this.imgWidth; col++) {
         const tileNo = this.arr[row][col];
         const x = (tileNo % this.col);
         const y = Math.floor(tileNo / this.col);
@@ -35,7 +25,7 @@ export default class TileSet extends Map {
           this.img,
           x * 32, y * 32,
           this.imgWidth, this.imgHeight,
-          (col - Math.floor(camera.x / this.imgWidth)) * this.imgWidth, (row - Math.floor(camera.y / this.imgHeight)) * this.imgHeight,
+          (col - Math.floor(camera.pos.x / this.imgWidth)) * this.imgWidth, (row - Math.floor(camera.pos.y / this.imgHeight)) * this.imgHeight,
           this.imgWidth, this.imgHeight);
       }
     }

@@ -1,10 +1,6 @@
 import Input from "./keyInput.js"
 import TileSet from "./TileSet.js";
-import Camera from "./camera.js";
-import Player from "./player.js";
 import CollisionMap from "./CollisionMap.js";
-import DynamicOjbects from "./DynamicObject.js";
-import StaticObject from "./StaticObject.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
@@ -78,7 +74,6 @@ export default class Game {
   render(ctx) {
     //console.log(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight)
     //this.camera.checkUpdate(this.input.getKey);
-    console.log("rendering");
     this.camera.checkUpdate(this.input.getKey);
     this.floorMap.draw(this.camera);
     this.chairMap.draw(this.camera);

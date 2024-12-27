@@ -1,4 +1,3 @@
-import TileSet from "./TileSet.js";
 import Vec2 from "./utils/vec2.js";
 
 export default class Camera {
