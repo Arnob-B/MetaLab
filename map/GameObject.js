@@ -14,63 +14,27 @@ export default class GameObject {
     this.maxFrameX = this.sprite.naturalWidth / this.width;
     this.maxFrameY = this.sprite.naturalHeight / this.height;
 
-    // Animation properties
-    this.i = 1;
     this.frameX = 0;
-    this.frameY = 0;
-    this.animationTimer = 0;
-    this.animationInterval = 100; // Time between frame changes in ms
-    this.lastUpdate = Date.now();
+    this.frameY = 16;
 
-    // Add boundary properties
-    //this.maxX = 14; // GAME_WIDTH - 1
-    //this.maxY = 9;  // GAME_HEIGHT - 1
   }
 
   changeFrame() {
     this.frameX = (this.frameX + 1) % this.maxFrameX;
-    this.frameY = (this.frameY + 1) % this.maxFrameY;
+    //this.frameY = (this.frameY + 1) % this.maxFrameY;
   }
-  /*
-  update(x, y, maxFrameX = 1, maxFrameY = 1) {
-    // Boundary checking
-    const newX = Math.max(0, Math.min(x, this.maxX));
-    const newY = Math.max(0, Math.min(y, this.maxY));
-
-
-    // Update position
-    this.x = newX * 32;
-    this.y = newY * 32;
-
-    // Update animation frame
-    const currentTime = Date.now();
-    this.animationTimer += currentTime - this.lastUpdate;
-    this.lastUpdate = currentTime;
-
-    if (this.animationTimer >= this.animationInterval) {
-      // Reset timer
-      this.animationTimer = 0;
-
-      // Update frame
-      this.frameX = (this.frameX + 1) % maxFrameX;
-
-      // If we've completed a row, move to next row
-      if (this.frameX === 0) {
-        this.frameY = (this.frameY + 1) % maxFrameY;
-      }
-    }
-    return { x: newX, y: newY }; // Return the actual position after boundary checking
-  }
-  */
 
   draw(camera) {
     // Only draw if we have a valid sprite
+    document.querySelector("#playerLog").innerHTML = `
+        ${JSON.stringify(this)}
+      `
     if (!this.sprite) return;
     this.changeFrame();
 
     // Calculate screen position based on camera
-    const screenX = this.grid.x - camera.x;
-    const screenY = this.grid.y - camera.y;
+    const screenX = this.grid.x - camera.pos.x;
+    const screenY = this.grid.y - camera.pos.y;
 
     // Only draw if object is visible on screen
     if (screenX + this.width < 0 ||
