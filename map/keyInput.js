@@ -1,25 +1,14 @@
 export default class Input {
   constructor() {
+    this.validKeys = ["ArrowUp", "ArrowDown","ArrowRight", "ArrowLeft", "h","l"];
     this.keys = [];
     this.listenerFunctions = [{}];
     document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp") this.addKey(e.key);
-      if (e.key === "ArrowDown") this.addKey(e.key);
-      if (e.key === "ArrowRight") this.addKey(e.key);
-      if (e.key === "ArrowLeft") this.addKey(e.key);
-      if (e.key === "h") this.addKey(e.key);
-      if (e.key === "l") this.addKey(e.key);
-      //logging
+      if(this.validKeys.findIndex((a)=> a === e.key)!=-1) this.addKey(e.key);
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
     document.addEventListener("keyup", (e) => {
-      if (e.key === "ArrowUp") this.delKey(e.key);
-      if (e.key === "ArrowDown") this.delKey(e.key);
-      if (e.key === "ArrowRight") this.delKey(e.key);
-      if (e.key === "ArrowLeft") this.delKey(e.key);
-      if (e.key === "h") this.delKey(e.key);
-      if (e.key === "l") this.delKey(e.key);
-      //logging
+      if(this.validKeys.findIndex((a)=> a === e.key)!=-1) this.delKey(e.key);
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
   }
