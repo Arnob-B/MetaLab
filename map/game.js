@@ -63,21 +63,9 @@ export default class Game {
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]);
 
-    this.player = new StaticObject("player", 1, 1, 64, 64);
+    //this.player = new StaticObject("player", 32, 32, 64, 64);
 
-    this.input = new Input;
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp") this.camera.update(0, -1);
-      if (e.key === "ArrowDown") this.camera.update(0, 1);
-      if (e.key === "ArrowRight") this.camera.update(1, 0);
-      if (e.key === "ArrowLeft") this.camera.update(-1, 0);
-    })
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "w") { this.player.update(0, -1); }
-      if (e.key === "a") { this.player.update(-1, 0); }
-      if (e.key === "s") { this.player.update(0, 1); }
-      if (e.key === "d") { this.player.update(1, 0); }
-    })
+    this.input = new Input();
 
   }
   drawGrid(ctx, size) {
@@ -90,10 +78,12 @@ export default class Game {
   render(ctx) {
     //console.log(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight)
     //this.camera.checkUpdate(this.input.getKey);
+    console.log("rendering");
+    this.camera.checkUpdate(this.input.getKey);
     this.floorMap.draw(this.camera);
     this.chairMap.draw(this.camera);
     this.tableMap.draw(this.camera);
-    this.player.draw(this.camera);
+    //this.player.draw(this.camera);
     this.drawGrid(ctx, 32);
   }
 }

@@ -1,27 +1,34 @@
+import Vec2 from "./utils/vec2.js";
+
 export default class Camera {
-  constructor({ gameWidth, gameHeight, canvasWidth, canvasHeight, context }) {
+  constructor({ gameWidth, gameHeight, canvasWidth, canvasHeight, context, tileSize }) {
     this.gameWidth = gameWidth
     this.gameHeight = gameHeight
     this.height = canvasWidth
     this.width = canvasHeight
     this.ctx = context;
-    this.x = 0;
-    this.y = 0;
+    this.pos = new Vec2(0, 0);
+    this.TILE_SIZE = tileSize;
+    this.grid = new Vec2(Math.floor(0 / this.TILE_SIZE), Math.floor(0 / this.TILE_SIZE));
 
-    this.speedx = 0;
-    this.speedy = 0;
-    this.speedFactor = 32;
+    this.speed = new Vec2(0, 0); // pixel based
+    this.speedFactor = 32; // helps for grid conversion
     this.update(0, 0);
   }
   update(speedx, speedy) {
-    this.speedx = speedx * this.speedFactor;
-    this.speedy = speedy * this.speedFactor;
-    document.querySelector("#camera").innerHTML = `x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}`
-    if (this.x + this.speedx >= 0 && this.x + this.speedx <= this.gameWidth - this.width) {
-      if (this.y + this.speedy >= 0 && this.y + this.speedy <= this.gameHeight - this.height) {
-        this.x = this.x + this.speedx;
-        this.y = this.y + this.speedy;
-        document.querySelector("#camera").innerHTML = `hit x->${this.x},y->${this.y},speedX->${this.speedx},speedY->${this.speedy},speedFactor->${this.speedFactor}`
+    this.speed.x = speedx * this.speedFactor;
+    this.speed.y = speedy * this.speedFactor;
+    document.querySelector("#camera").innerHTML = `
+    stale x->${this.pos.x},y->${this.pos.y},speedX->${this.speed.x},speedY->${this.speed.y},speedFactor->${this.speedFactor}
+    `
+    // calculation based on pixels
+    if (this.pos.x + this.speed.x >= 0 && this.pos.x + this.speed.x <= this.gameWidth - this.width) {
+      if (this.pos.y + this.speed.y >= 0 && this.pos.y + this.speed.y <= this.gameHeight - this.height) {
+        this.pos.x += this.speed.x;
+        this.pos.y += this.speed.y;
+        document.querySelector("#camera").innerHTML = `
+        hit x->${this.pos.x},y->${this.pos.y},speedX->${this.speed.x},speedY->${this.speed.y},speedFactor->${this.speedFactor}
+        `
       }
     }
   }

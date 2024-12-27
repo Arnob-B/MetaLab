@@ -1,7 +1,7 @@
 import Camera from "./camera.js";
 import Game from "./game.js";
 import specs from "./specs.js";
-import vec2 from "./vec2.js";
+import Vec2 from "./utils/vec2.js";
 const TILE_SIZE = specs.TILE_SIZE;
 const gameWidth = specs.TILE_SIZE * specs.GAME_WIDTH;
 const gameHeight = specs.TILE_SIZE * specs.GAME_HEIGHT;

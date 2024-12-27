@@ -1,10 +1,10 @@
-import vec2 from "./vec2.js";
+import Vec2 from "./utils/vec2.js";
 
 export default class GameObject {
+  // x,y,height, width, renderWidth, renderHeight, tileSize -->> pixel base
   constructor(spriteId = "", x = 0, y = 0, width = 32, height = 32, renderWidth = 32, renderHeight = 32, tileSize = 32) {
-    this.pos = new vec2(x, y);
-    this.x = x * tileSize; // Converted from grid to position to pixels
-    this.y = y * tileSize;
+    this.pos = new Vec2(x, y)
+    this.grid = new Vec2(Math.floor(x / tileSize), Math.floor(y / tileSize));
     this.width = width;
     this.height = height;
     this.renderHeight = renderHeight;
@@ -68,10 +68,9 @@ export default class GameObject {
     if (!this.sprite) return;
     this.changeFrame();
 
-    this.frameX++;
     // Calculate screen position based on camera
-    const screenX = this.x - camera.x;
-    const screenY = this.y - camera.y;
+    const screenX = this.grid.x - camera.x;
+    const screenY = this.grid.y - camera.y;
 
     // Only draw if object is visible on screen
     if (screenX + this.width < 0 ||
