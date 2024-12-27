@@ -1,7 +1,8 @@
+import TileSet from "./TileSet.js";
 import Vec2 from "./utils/vec2.js";
 
 export default class Camera {
-  constructor({ gameWidth, gameHeight, canvasWidth, canvasHeight, context, tileSize }) {
+  constructor({ gameWidth, gameHeight, canvasWidth, canvasHeight, context, tileSize = 32 }) {
     this.gameWidth = gameWidth
     this.gameHeight = gameHeight
     this.height = canvasWidth
@@ -19,16 +20,17 @@ export default class Camera {
     this.speed.x = speedx * this.speedFactor;
     this.speed.y = speedy * this.speedFactor;
     document.querySelector("#camera").innerHTML = `
-    stale x->${this.pos.x},y->${this.pos.y},speedX->${this.speed.x},speedY->${this.speed.y},speedFactor->${this.speedFactor}
-    `
+        hit ${JSON.stringify(this)}
+      `
     // calculation based on pixels
     if (this.pos.x + this.speed.x >= 0 && this.pos.x + this.speed.x <= this.gameWidth - this.width) {
       if (this.pos.y + this.speed.y >= 0 && this.pos.y + this.speed.y <= this.gameHeight - this.height) {
         this.pos.x += this.speed.x;
         this.pos.y += this.speed.y;
+        this.grid.update(Math.floor(this.pos.x / this.TILE_SIZE), Math.floor(this.pos.y / this.TILE_SIZE));
         document.querySelector("#camera").innerHTML = `
-        hit x->${this.pos.x},y->${this.pos.y},speedX->${this.speed.x},speedY->${this.speed.y},speedFactor->${this.speedFactor}
-        `
+        hit ${JSON.stringify(this)}
+      `
       }
     }
   }
