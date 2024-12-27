@@ -59,10 +59,26 @@ export default class Game {
       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]);
+    this.input = new Input();
 
     this.obj = new GameObject("player",0,0, 64,64,32,32);
+    const func=function(){
+      this.frameY = 20;
+      this.maxFrameX = 6;
+      this.frameX = (this.frameX + 1) % this.maxFrameX;
+    }.bind(this.obj);
+    this.obj.frameSet("fall",func);
+    this.obj.frameSet("jump",function(){
+      this.frameY = 2;
+      this.maxFrameX = 7;
+      this.frameX = (this.frameX + 1) % this.maxFrameX;
+    }.bind(this.obj));
+    this.obj.frameSet("thrust",function(){
+      this.frameY = 5;
+      this.maxFrameX = 8;
+      this.frameX = (this.frameX + 1) % this.maxFrameX;
+    }.bind(this.obj));
 
-    this.input = new Input();
 
   }
   drawGrid(ctx, size) {
@@ -77,6 +93,10 @@ export default class Game {
     this.floorMap.draw(this.camera);
     this.chairMap.draw(this.camera);
     this.tableMap.draw(this.camera);
+    for (let a of this.input.getKey) {
+      if (a === 'h') {this.obj.frameSet("fall");break;}
+      if (a === 'l') this.obj.frameSet("jump");
+    }
     this.obj.draw(this.camera);
     this.drawGrid(ctx, 32);
   }

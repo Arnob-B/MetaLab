@@ -11,17 +11,36 @@ export default class GameObject {
     this.TILESIZE = tileSize
     this.renderWidth = renderWidth;
     this.sprite = document.querySelector(`#${spriteId}`);
-    this.maxFrameX = this.sprite.naturalWidth / this.width;
-    this.maxFrameY = this.sprite.naturalHeight / this.height;
 
     this.frameX = 0;
     this.frameY = 16;
+    this.maxFrameX = this.sprite.naturalWidth / this.width;
+    this.maxFrameY = this.sprite.naturalHeight / this.height;
 
+    this.triggerEvents = [{
+      key : "",
+      func : ()=>{}
+    }]
+    this.currentFrameKey = "";
   }
 
   changeFrame() {
     this.frameX = (this.frameX + 1) % this.maxFrameX;
     //this.frameY = (this.frameY + 1) % this.maxFrameY;
+  }
+  frameSet(key,func){
+    for(let a of this.triggerEvents){
+      if( a.key === key  )
+      {
+        this.currentFrameKey = key;
+        a.func();
+        return;
+      }
+    }
+    // adding new key
+    if(func === undefined) return;
+    this.triggerEvents.push({key:key, func :func});
+    this.currentFrameKey = key;
   }
 
   draw(camera) {
@@ -30,8 +49,7 @@ export default class GameObject {
         ${JSON.stringify(this)}
       `
     if (!this.sprite) return;
-    this.changeFrame();
-
+    this.frameSet(this.currentFrameKey);
     // Calculate screen position based on camera
     const screenX = this.grid.x - camera.pos.x;
     const screenY = this.grid.y - camera.pos.y;

@@ -7,6 +7,8 @@ export default class Input {
       if (e.key === "ArrowDown") this.addKey(e.key);
       if (e.key === "ArrowRight") this.addKey(e.key);
       if (e.key === "ArrowLeft") this.addKey(e.key);
+      if (e.key === "h") this.addKey(e.key);
+      if (e.key === "l") this.addKey(e.key);
       //logging
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
@@ -15,6 +17,8 @@ export default class Input {
       if (e.key === "ArrowDown") this.delKey(e.key);
       if (e.key === "ArrowRight") this.delKey(e.key);
       if (e.key === "ArrowLeft") this.delKey(e.key);
+      if (e.key === "h") this.delKey(e.key);
+      if (e.key === "l") this.delKey(e.key);
       //logging
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
@@ -30,5 +34,8 @@ export default class Input {
   }
   get getKey() {
     return this.keys;
+  }
+  getkeys(){
+    return this.keys
   }
 }
