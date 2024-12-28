@@ -2,6 +2,7 @@ import Input from "./keyInput.js"
 import TileSet from "./TileSet.js";
 import CollisionMap from "./CollisionMap.js";
 import GameObject from "./GameObject.js"
+import DynamicOjbects from "./DynamicObject.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
@@ -62,6 +63,7 @@ export default class Game {
     this.input = new Input();
 
     this.obj = new GameObject("player",0,0, 64,64,32,32);
+    this.obj2 = new DynamicOjbects("player",32,32, 64,64,32,32);
     const func=function(){
       this.frameY = 20;
       this.maxFrameX = 6;
@@ -98,7 +100,7 @@ export default class Game {
       if (a === 'h') {this.obj.frameSet("fall");break;}
       if (a === 'l') this.obj.frameSet("jump");
     }
-    this.obj.draw(this.camera);
+    this.obj2.draw(this.camera);
     this.drawGrid(ctx, 32);
   }
 }

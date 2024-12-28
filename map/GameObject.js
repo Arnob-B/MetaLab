@@ -13,7 +13,7 @@ export default class GameObject {
     this.sprite = document.querySelector(`#${spriteId}`);
 
     this.frameX = 0;
-    this.frameY = 16;
+    this.frameY = 0;
     this.maxFrameX = this.sprite.naturalWidth / this.width;
     this.maxFrameY = this.sprite.naturalHeight / this.height;
 
@@ -44,15 +44,18 @@ export default class GameObject {
   }
 
   draw(camera) {
-    // Only draw if we have a valid sprite
     document.querySelector("#playerLog").innerHTML = `
+        ----------------------------------${this.spriteId}
+        ----------------------------------
         ${JSON.stringify(this)}
+        ----------------------------------
       `
+    // Only draw if we have a valid sprite
     if (!this.sprite) return;
     this.frameSet(this.currentFrameKey);
     // Calculate screen position based on camera
-    const screenX = this.grid.x - camera.pos.x;
-    const screenY = this.grid.y - camera.pos.y;
+    const screenX = this.pos.x - camera.pos.x;
+    const screenY = this.pos.y - camera.pos.y;
 
     // Only draw if object is visible on screen
     if (screenX + this.width < 0 ||
