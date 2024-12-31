@@ -62,25 +62,37 @@ export default class Game {
     ]);
     this.input = new Input();
 
-    this.obj = new GameObject("player",0,0, 64,64,32,32);
-    this.obj2 = new DynamicOjbects("player",32,32, 64,64,32,32);
-    const func=function(){
+    this.obj = new GameObject("player", 0, 0, 64, 64, 32, 32);
+    this.obj2 = new DynamicOjbects("player", 32, 32, 64, 64, 32, 32);
+    const func = function() {
       this.frameY = 20;
       this.maxFrameX = 6;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
     }.bind(this.obj);
-    this.obj.frameSet("fall",func);
-    this.obj.frameSet("jump",function(){
-      if(this.currentFrameKey === "jump" && this.frameX === 0) this.currentFrameKey = "";
+    this.obj.eventSet("fall", func);
+    this.obj.eventSet("jump", function() {
+      if (this.currentFrameKey === "jump" && this.frameX === 0) this.currentFrameKey = "";
       this.frameY = 2;
       this.maxFrameX = 7;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
     }.bind(this.obj));
-    this.obj.frameSet("thrust",function(){
+    this.obj.eventSet("thrust", function() {
       this.frameY = 5;
       this.maxFrameX = 8;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
     }.bind(this.obj));
+    this.obj2.eventSet("moveRight", function() {
+      if (this.speed.x == 0) this.speed.x += 32;
+    }.bind(this.obj2));
+    this.obj2.eventSet("moveUp", function() {
+      if (this.speed.y == 0) this.speed.y -= 32;
+    }.bind(this.obj2));
+    this.obj2.eventSet("moveLeft", function() {
+      if (this.speed.x == 0) this.speed.x -= 32;
+    }.bind(this.obj2));
+    this.obj2.eventSet("moveDown", function() {
+      if (this.speed.y == 0) this.speed.y += 32;
+    }.bind(this.obj2));
 
 
   }
@@ -94,13 +106,40 @@ export default class Game {
   render(ctx) {
     this.camera.checkUpdate(this.input.getKey);
     this.floorMap.draw(this.camera);
+    this.drawGrid(ctx, 32);
+    let flag = 1;
+    for (let a of this.input.getKey) {
+      if (a === 'h') {
+        this.obj2.eventSet("moveLeft");
+        flag = 0;
+        break;
+      }
+      if (a === 'l') {
+        this.obj2.eventSet("moveRight");
+        flag = 0;
+        break;
+      }
+      if (a === 'k') {
+        this.obj2.eventSet("moveUp");
+        flag = 0;
+        break;
+      }
+      if (a === 'j') {
+        this.obj2.eventSet("moveDown");
+        flag = 0;
+        break;
+      }
+    }
+    if (flag) {
+      this.obj2.speed.x = 0;
+      this.obj2.speed.y = 0;
+    }
+    //this.obj2.helperGrid(this.camera);
+    this.obj.draw(this.camera);
+    this.obj2.draw(this.camera, this.collisionMap.arr);
+    this.obj2.log();
     this.chairMap.draw(this.camera);
     this.tableMap.draw(this.camera);
-    for (let a of this.input.getKey) {
-      if (a === 'h') {this.obj.frameSet("fall");break;}
-      if (a === 'l') this.obj.frameSet("jump");
-    }
-    this.obj2.draw(this.camera);
-    this.drawGrid(ctx, 32);
   }
 }
+

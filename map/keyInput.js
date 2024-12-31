@@ -1,14 +1,14 @@
 export default class Input {
   constructor() {
-    this.validKeys = ["ArrowUp", "ArrowDown","ArrowRight", "ArrowLeft", "h","l"];
+    this.validKeys = ["ArrowUp", "ArrowDown", "ArrowRight", "ArrowLeft", "h", "l", "j", "k"];
     this.keys = [];
     this.listenerFunctions = [{}];
     document.addEventListener("keydown", (e) => {
-      if(this.validKeys.findIndex((a)=> a === e.key)!=-1) this.addKey(e.key);
+      if (this.validKeys.findIndex((a) => a === e.key) != -1) this.addKey(e.key);
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
     document.addEventListener("keyup", (e) => {
-      if(this.validKeys.findIndex((a)=> a === e.key)!=-1) this.delKey(e.key);
+      if (this.validKeys.findIndex((a) => a === e.key) != -1) this.delKey(e.key);
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
     });
   }
@@ -23,8 +23,5 @@ export default class Input {
   }
   get getKey() {
     return this.keys;
-  }
-  getkeys(){
-    return this.keys
   }
 }

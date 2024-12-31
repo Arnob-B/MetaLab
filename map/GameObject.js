@@ -18,8 +18,8 @@ export default class GameObject {
     this.maxFrameY = this.sprite.naturalHeight / this.height;
 
     this.triggerEvents = [{
-      key : "",
-      func : ()=>{}
+      key: "",
+      func: () => { }
     }]
     this.currentFrameKey = "";
   }
@@ -28,31 +28,36 @@ export default class GameObject {
     this.frameX = (this.frameX + 1) % this.maxFrameX;
     //this.frameY = (this.frameY + 1) % this.maxFrameY;
   }
-  frameSet(key,func){
-    for(let a of this.triggerEvents){
-      if( a.key === key  )
-      {
+  eventSet(key, func) {
+    for (let a of this.triggerEvents) {
+      if (a.key === key) {
         this.currentFrameKey = key;
-        a.func();
         return;
       }
     }
     // adding new key
-    if(func === undefined) return;
-    this.triggerEvents.push({key:key, func :func});
+    if (func === undefined) { console.log("null key found"); return; }
+    this.triggerEvents.push({ key: key, func: func });
     this.currentFrameKey = key;
   }
-
-  draw(camera) {
+  log() {
     document.querySelector("#playerLog").innerHTML = `
         ----------------------------------${this.spriteId}
         ----------------------------------
         ${JSON.stringify(this)}
         ----------------------------------
       `
+  }
+  checkEvent() {
+    //checking for events
+    this.triggerEvents.forEach(e => { if (e.key == this.currentFrameKey) { console.log(e.key); e.func() } });
+    this.currentFrameKey = "";
+  }
+
+  draw(camera) {
     // Only draw if we have a valid sprite
     if (!this.sprite) return;
-    this.frameSet(this.currentFrameKey);
+    this.checkEvent();
     // Calculate screen position based on camera
     const screenX = this.pos.x - camera.pos.x;
     const screenY = this.pos.y - camera.pos.y;
@@ -91,7 +96,6 @@ export default class GameObject {
   intersects(other) {
     const bounds = this.getBounds();
     const otherBounds = other.getBounds();
-
     return bounds.left < otherBounds.right &&
       bounds.right > otherBounds.left &&
       bounds.top < otherBounds.bottom &&
