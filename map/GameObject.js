@@ -1,3 +1,4 @@
+import Queue from "./lib/Queue.js";
 import Vec2 from "./utils/vec2.js";
 
 export default class GameObject {
@@ -22,6 +23,7 @@ export default class GameObject {
       func: () => { }
     }]
     this.currentFrameKey = "";
+    this.currentEvents = new Queue;
   }
 
   changeFrame() {
@@ -31,14 +33,14 @@ export default class GameObject {
   eventSet(key, func) {
     for (let a of this.triggerEvents) {
       if (a.key === key) {
-        this.currentFrameKey = key;
+        this.currentEvents.enqueue(key);
         return;
       }
     }
     // adding new key
-    if (func === undefined) { console.log("null key found"); return; }
+    if (func === undefined) { return; }
     this.triggerEvents.push({ key: key, func: func });
-    this.currentFrameKey = key;
+    //this.currentEvents.enqueue(key);
   }
   log() {
     document.querySelector("#playerLog").innerHTML = `
@@ -49,15 +51,28 @@ export default class GameObject {
       `
   }
   checkEvent() {
-    //checking for events
-    this.triggerEvents.forEach(e => { if (e.key == this.currentFrameKey) { console.log(e.key); e.func() } });
-    this.currentFrameKey = "";
+    /* bad code endless running code
+    while (!this.currentEvents.empty()) {
+      const key = this.currentEvents.dequeu();
+      if (key != null) {
+        console.log(key);
+        this.triggerEvents.find((p) => p.key == key).func.call(this);
+      }
+    }
+    */
+    let count = this.currentEvents.size();
+    while (count--) {
+      const key = this.currentEvents.dequeu();
+      if (key != null) {
+        this.triggerEvents.find((p) => p.key == key).func.call(this);
+      }
+    }
   }
 
   draw(camera) {
     // Only draw if we have a valid sprite
     if (!this.sprite) return;
-    this.checkEvent();
+    //this.checkEvent();
     // Calculate screen position based on camera
     const screenX = this.pos.x - camera.pos.x;
     const screenY = this.pos.y - camera.pos.y;

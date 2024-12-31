@@ -20,7 +20,6 @@ export default class TileSet extends Map {
         const tileNo = this.arr[row][col];
         const x = (tileNo % this.col);
         const y = Math.floor(tileNo / this.col);
-        // console.log(tileNo,x,y);
         camera.ctx.drawImage(
           this.img,
           x * 32, y * 32,

@@ -1,8 +1,7 @@
 export default class Input {
   constructor() {
-    this.validKeys = ["ArrowUp", "ArrowDown", "ArrowRight", "ArrowLeft", "h", "l", "j", "k"];
+    this.validKeys = ["ArrowUp", "ArrowDown", "ArrowRight", "ArrowLeft", "h", "l", "j", "k", "w", "a", "s", "d"];
     this.keys = [];
-    this.listenerFunctions = [{}];
     document.addEventListener("keydown", (e) => {
       if (this.validKeys.findIndex((a) => a === e.key) != -1) this.addKey(e.key);
       document.querySelector("#inputLog").innerHTML = `${this.keys}`;
