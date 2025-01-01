@@ -5,6 +5,7 @@ import GameObject from "../lib/GameObject.js"
 import DynamicOjbects from "../lib/DynamicObject.js";
 import Monitor from "./monitor.js";
 import Hero from "./hero.js";
+import Entity from "./entity.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
@@ -64,11 +65,22 @@ export default class Game {
     ]);
     this.input = new Input();
 
-    this.obj2 = new DynamicOjbects("player", 32, 32, 64, 64, 32, 32);
-    this.hero = new Hero(1, 2, this.collisionMap.arr);
+    this.hero = new Hero(2, 4, this.collisionMap.arr);
+    this.entity = new Entity();
 
-    this.mon = new Monitor(2, 3);
-    this.collisionMap.setCol(2, 3);
+    for (let a = 0; a < (this.gameWidth / this.TILE_SIZE); a++) {
+      let x = Math.floor(Math.random() * 10) % 9;
+      let y = Math.floor(Math.random() * 10) % 9;
+      let mon = new Monitor(a, 0);
+      let choice = Math.floor(Math.random() * 10) % 2;
+      if (choice) {
+        mon.isLocked = 1;
+        mon.lockerId = Math.floor(Math.random() * 100) % 100;
+        mon.textArea.innerText = "you are not the owner"
+      }
+      this.entity.addMonitor(mon);
+      this.collisionMap.setCol(a, 0);
+    }
   }
   drawGrid(size) {
     for (let row = 0; row < this.gameWidth; row += size) {
@@ -78,31 +90,11 @@ export default class Game {
     }
   }
   update() {
-    let flag = 1;
-    for (let a of this.input.getKey) {
-      if (a === 'a') {
-        this.hero.moveLeft();
-        flag = 0;
-      }
-      if (a === 'd') {
-        this.hero.moveRight();
-        flag = 0;
-      }
-      if (a === 'w') {
-        this.hero.moveUp();
-        flag = 0;
-      }
-      if (a === 's') {
-        this.hero.moveDown();
-        flag = 0;
-      }
-    }
-    if (flag) {
-      this.hero.obj.speed.x = 0;
-      this.hero.obj.speed.y = 0;
-    }
     this.camera.checkUpdate(this.input.getKey);
-    this.mon.isTouched(this.hero.obj.grid.x, this.hero.obj.grid.y);
+    //this.mon.isTouched(this.hero.obj.grid.x, this.hero.obj.grid.y);
+    this.hero.checkInput(this.input.getKey);
+    this.entity.checkHeroAndMonitor(this.hero, this.input.getKey);
+
   }
   render() {
     this.update();
@@ -111,7 +103,7 @@ export default class Game {
     this.tableMap.draw(this.camera);
     this.drawGrid(this.TILE_SIZE);
     this.hero.render(this.camera, this.collisionMap.arr);
-    this.mon.render(this.camera)
+    this.entity.render(this.camera, this.collisionMap.arr);
   }
 }
 

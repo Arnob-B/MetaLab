@@ -37,7 +37,7 @@ export default class DynamicOjbects extends GameObject {
   move(collisionMap) {
     //collision check
     const newGrid = new Vec2(this.grid.x + (this.speed.x / this.TILESIZE), this.grid.y + (this.speed.y / this.TILESIZE));
-    if (collisionMap[newGrid.y][newGrid.x] == 1)
+    if (collisionMap[newGrid.y] === undefined || collisionMap[newGrid.y][newGrid.x] === undefined || collisionMap[newGrid.y][newGrid.x] == 1)
       return; // collision occured
     this.pos.x += this.speed.x;
     this.pos.y += this.speed.y;

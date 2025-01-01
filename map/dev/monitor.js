@@ -4,28 +4,61 @@ export default class Monitor {
   constructor(x, y) {
     this.object = new GameObject("fire", x * 32, y * 32, 128, 128, 32, 32, 32);
     this.fireAnimation = 0;
+    this.isLocked = 0;
+    this.lockerId = 0;
     this.alert = 0;
+    this.textArea = document.createElement("textarea");
+    this.textArea.hidden = true;
+    document.querySelector("#text-container").appendChild(this.textArea);
+  }
+  toggleLock(userId, keys) {
+    let ind = keys.findIndex(e => e === 'j')
+    if (ind != -1) {
+      if (this.isLocked) {
+        if (this.lockerId === userId) {
+          console.log("unlocked");
+          this.isLocked = 0;
+        }
+      }
+      else {
+        console.log("locked");
+        this.lockerId = userId;
+        this.isLocked = 1;
+      }
+    }
   }
   animate() {
     this.object.frameY = 0;
     this.object.maxFrameX = 7;
     this.object.frameX = (this.object.frameX + 1) % this.object.maxFrameX;
-    document.querySelector('#textbox').removeAttribute("hidden", "")
   }
-  isTouched(x, y) { // grid system
-    if (x == this.object.grid.x && (y == this.object.grid.y + 1)) {
+  isTouched(hero, keys) { // grid system
+    if (hero.obj.grid.x == this.object.grid.x && (hero.obj.grid.y == this.object.grid.y + 1)) {
       this.fireAnimation = 1;
+      this.toggleLock(hero.userId, keys);
+      if (hero.userId === this.lockerId) {
+        this.textArea.hidden = false;
+        this.textArea.disabled = false;
+      }
+      else {
+        this.textArea.hidden = false;
+        this.textArea.disabled = true;
+      }
     }
     else {
       this.fireAnimation = 0;
-      document.querySelector('#textbox').setAttribute("hidden", "")
+      this.textArea.hidden = true;
     }
   }
   render(camera) {
-    if (this.fireAnimation == 1) {
-      this.object.eventSet("boom", this.animate.bind(this));
+    if (this.fireAnimation == 1 || this.isLocked) {
+      //this.object.eventSet("boom", this.animate.bind(this));
+      this.animate();
     }
-    this.object.checkEvent();
+    else {
+      this.object.frameX = 0;
+    }
+    //this.object.checkEvent();
     this.object.draw(camera);
   }
 }
