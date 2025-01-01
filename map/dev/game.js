@@ -12,6 +12,7 @@ export default class Game {
     this.camera = camera;
     this.canvasHeight = canvasHeight // in px
     this.canvasWidth = canvasWidth // in px
+    this.input = new Input();
     this.gameHeight = gameHeight // in px
     this.gameWidth = gameWidth // in px
     this.TILE_SIZE = TILE_SIZE // in px
@@ -63,7 +64,6 @@ export default class Game {
       [1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]);
-    this.input = new Input();
 
     this.hero = new Hero(2, 4, this.collisionMap.arr);
     this.entity = new Entity();
