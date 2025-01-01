@@ -47,7 +47,6 @@ export default class DynamicOjbects extends GameObject {
   draw(camera, collisionMap) {
     // validity checks
     super.draw(camera);
-    this.move(collisionMap);
     //this.helperGrid(camera);
   };
 }
