@@ -3,6 +3,7 @@ import TileSet from "../lib/TileSet.js";
 import CollisionMap from "../lib/CollisionMap.js";
 import GameObject from "../lib/GameObject.js"
 import DynamicOjbects from "../lib/DynamicObject.js";
+import Monitor from "./monitor.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
@@ -62,7 +63,6 @@ export default class Game {
     ]);
     this.input = new Input();
 
-    this.obj = new GameObject("player", 2 * this.TILE_SIZE, 2 * this.TILE_SIZE, 64, 64, 32, 32);
     this.obj2 = new DynamicOjbects("player", 32, 32, 64, 64, 32, 32);
     this.fire = new GameObject("fire", -1 * this.TILE_SIZE, -1 * this.TILE_SIZE, 128, 128, 32, 32);
 
@@ -72,19 +72,6 @@ export default class Game {
       this.frameX = (this.frameX + 1) % this.maxFrameX;
       this.eventSet("boom");
     }.bind(this.fire));
-    this.obj.eventSet("thrust", function() {
-      this.frameY = 5;
-      this.maxFrameX = 8;
-      this.frameX = (this.frameX + 1) % this.maxFrameX;
-      this.eventSet("thrust"); // loooper
-    }.bind(this.obj));
-    this.obj.eventSet("unthrust", function() {
-      let ind = this.currentEvents.arr.indexOf("thrust");
-      while (ind != -1) {
-        this.currentEvents.arr.splice(ind, 1);
-        ind = this.currentEvents.arr.indexOf("thrust");
-      }
-    }.bind(this.obj));
 
     this.obj2.eventSet("moveRight", function() {
       if (this.speed.x == 0) this.speed.x += 32;
@@ -92,30 +79,26 @@ export default class Game {
       this.frameY = 11;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
     }.bind(this.obj2));
-    this.obj2.eventSet("moveUp", function(obj) {
+    this.obj2.eventSet("moveUp", function() {
       if (this.speed.y == 0) this.speed.y -= 32;
-      const nextY = this.pos.y + this.speed.y;
-      const nextX = this.pos.x + this.speed.x;
-      if (nextY == obj.pos.y && nextX == obj.pos.x) { obj.eventSet("thrust"); }
       this.maxFrameX = 9;
       this.frameY = 8;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
-    }.bind(this.obj2, this.obj));
+    }.bind(this.obj2));
     this.obj2.eventSet("moveLeft", function() {
       if (this.speed.x == 0) this.speed.x -= 32;
       this.maxFrameX = 9;
       this.frameY = 9;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
     }.bind(this.obj2));
-    this.obj2.eventSet("moveDown", function(obj) {
+    this.obj2.eventSet("moveDown", function() {
       if (this.speed.y == 0) this.speed.y += 32;
-      const nextY = this.pos.y + this.speed.y;
-      const nextX = this.pos.x + this.speed.x;
-      if (nextY == obj.pos.y && nextX == obj.pos.x) { obj.eventSet("unthrust"); }
       this.maxFrameX = 9;
       this.frameY = 10;
       this.frameX = (this.frameX + 1) % this.maxFrameX;
-    }.bind(this.obj2, this.obj));
+    }.bind(this.obj2));
+    this.mon = new Monitor(2, 3);
+    this.collisionMap.setCol(2, 3);
   }
   drawGrid(size) {
     for (let row = 0; row < this.gameWidth; row += size) {
@@ -151,7 +134,9 @@ export default class Game {
       if (a === 'h') {
         //this.fire.pos = this.obj2.pos;
         this.fire.pos.update(this.obj2.pos.x, this.obj2.pos.y);
-        this.fire.eventSet("boom");
+        if (this.fire.currentEvents.arr.find(e => e === "boom"));
+        else this.fire.eventSet("boom");
+
         flag = 0;
       }
     }
@@ -160,14 +145,13 @@ export default class Game {
       this.obj2.speed.y = 0;
     }
     this.obj2.checkEvent();
-    this.obj.checkEvent();
     this.obj2.log();
-    //this.obj2.helperGrid(this.camera);
-    this.obj.draw(this.camera);
     this.obj2.draw(this.camera, this.collisionMap.arr);
     this.fire.checkEvent();
     this.fire.draw(this.camera);
     this.fire.log();
+    this.mon.isTouched(this.obj2.grid.x, this.obj2.grid.y);
+    this.mon.render(this.camera)
   }
 }
 
