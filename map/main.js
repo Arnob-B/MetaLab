@@ -22,15 +22,17 @@ window.addEventListener("load", () => {
   });
 
   let x = 0;
-  let delta = 0;
+  let cur = Date.now();
+  let frameRate = 8;
+  let frameRateInterval = Math.floor(1000 / frameRate);
   const animate = (whatisit) => {
-    if (x % 8 == 0) {
+    console.log(Date.now() - cur, frameRateInterval);
+    if ((Date.now() - cur) > frameRateInterval) {
       ctx.clearRect(0, 0, canvasHeight, canvasWidth);
       game.render();
+      cur = Date.now();
     }
-    delta = whatisit;
     requestAnimationFrame(animate);
-    x++;
   }
   animate();
 });

@@ -64,7 +64,14 @@ export default class Game {
 
     this.obj = new GameObject("player", 2 * this.TILE_SIZE, 2 * this.TILE_SIZE, 64, 64, 32, 32);
     this.obj2 = new DynamicOjbects("player", 32, 32, 64, 64, 32, 32);
+    this.fire = new GameObject("fire", -1 * this.TILE_SIZE, -1 * this.TILE_SIZE, 128, 128, 32, 32);
 
+    this.fire.eventSet("boom", function() {
+      this.frameY = 0;
+      this.maxFrameX = 7;
+      this.frameX = (this.frameX + 1) % this.maxFrameX;
+      this.eventSet("boom");
+    }.bind(this.fire));
     this.obj.eventSet("thrust", function() {
       this.frameY = 5;
       this.maxFrameX = 8;
@@ -141,6 +148,12 @@ export default class Game {
         this.obj2.eventSet("moveDown");
         flag = 0;
       }
+      if (a === 'h') {
+        //this.fire.pos = this.obj2.pos;
+        this.fire.pos.update(this.obj2.pos.x, this.obj2.pos.y);
+        this.fire.eventSet("boom");
+        flag = 0;
+      }
     }
     if (flag) {
       this.obj2.speed.x = 0;
@@ -152,6 +165,9 @@ export default class Game {
     //this.obj2.helperGrid(this.camera);
     this.obj.draw(this.camera);
     this.obj2.draw(this.camera, this.collisionMap.arr);
+    this.fire.checkEvent();
+    this.fire.draw(this.camera);
+    this.fire.log();
   }
 }
 
