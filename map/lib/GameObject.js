@@ -1,5 +1,5 @@
-import Queue from "./lib/Queue.js";
-import Vec2 from "./utils/vec2.js";
+import Queue from "../utils/Queue.js";
+import Vec2 from "../utils/vec2.js";
 
 export default class GameObject {
   // x,y,height, width, renderWidth, renderHeight, tileSize -->> pixel base

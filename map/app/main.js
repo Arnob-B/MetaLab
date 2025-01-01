@@ -1,7 +1,7 @@
-import Camera from "./camera.js";
+import Camera from "../lib/camera.js";
 import Game from "./game.js";
 import specs from "./specs.js";
-import Vec2 from "./utils/vec2.js";
+import Vec2 from "../utils/vec2.js";
 const TILE_SIZE = specs.TILE_SIZE;
 const gameWidth = specs.TILE_SIZE * specs.GAME_WIDTH;
 const gameHeight = specs.TILE_SIZE * specs.GAME_HEIGHT;
@@ -26,7 +26,6 @@ window.addEventListener("load", () => {
   let frameRate = 8;
   let frameRateInterval = Math.floor(1000 / frameRate);
   const animate = (whatisit) => {
-    console.log(Date.now() - cur, frameRateInterval);
     if ((Date.now() - cur) > frameRateInterval) {
       ctx.clearRect(0, 0, canvasHeight, canvasWidth);
       game.render();

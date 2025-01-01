@@ -1,8 +1,8 @@
-import Input from "./keyInput.js"
-import TileSet from "./TileSet.js";
-import CollisionMap from "./CollisionMap.js";
-import GameObject from "./GameObject.js"
-import DynamicOjbects from "./DynamicObject.js";
+import Input from "../lib/keyInput.js"
+import TileSet from "../lib/TileSet.js";
+import CollisionMap from "../lib/CollisionMap.js";
+import GameObject from "../lib/GameObject.js"
+import DynamicOjbects from "../lib/DynamicObject.js";
 export default class Game {
   constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");

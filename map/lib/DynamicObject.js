@@ -1,5 +1,5 @@
 import GameObject from "./GameObject.js";
-import Vec2 from "./utils/vec2.js";
+import Vec2 from "../utils/vec2.js";
 
 export default class DynamicOjbects extends GameObject {
   constructor(spriteId = "", x = 0, y = 0, width = 32, height = 32, renderWidth = 32, renderHeight = 32, tileSize = 32) {
