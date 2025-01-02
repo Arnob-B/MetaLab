@@ -3,9 +3,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+ <div>
   <canvas id="mainCanvas">
   </canvas>
+ </div>
   <div>
+    <div class="text-input-container">
+      <textarea class="text-area" placeholder="Enter your text here..."></textarea>
+      <div class="char-count">Characters: 0</div>
+      <button class="push-button">Push</button>
+    </div>
+    <div class="alert-box">yes nigga howdy?</div>
+  
+    <script>
+      const textarea = document.querySelector('.text-area');
+      const charCount = document.querySelector('.char-count');
+      const pushButton = document.querySelector('.push-button');
+      const alertBox = document.querySelector('.alert-box');
+  
+      textarea.addEventListener('input', () => {
+        charCount.textContent = `Characters: ${textarea.value.length}`;
+      });
+  
+      pushButton.addEventListener('click', () => {
+        alertBox.style.display = 'block';
+        setTimeout(() => {
+          alertBox.style.display = 'none';
+        }, 2000);
+      });
+    </script>
     <h4>debug</h4>
     <h1>canvas</h1>
     <div id="canvasPops">
@@ -19,6 +45,7 @@
     <h1>INPUT</h1>
     <div id="inputLog">
     </div>
+
   </div>
 </body>
 <div>
