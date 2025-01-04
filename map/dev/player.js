@@ -1,10 +1,9 @@
 import DynamicOjbects from "../lib/DynamicObject.js";
-import GameObject from "../lib/GameObject.js";
 
-export default class Hero {
-  constructor(x, y, colMap, serverFunc) {
+export default class Player {
+  constructor(x, y, colMap, id) {
     this.serverFunc = serverFunc;
-    this.id = "hello";
+    this.id = id;
     this.obj = new DynamicOjbects("player", x * 32, y * 32, 64, 64, 32, 32, 32);
     this.colmap = colMap;
     this.userId = 1;

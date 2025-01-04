@@ -41,8 +41,15 @@ export default class DynamicOjbects extends GameObject {
       return; // collision occured
     this.pos.x += this.speed.x;
     this.pos.y += this.speed.y;
-    this.grid.x = Math.floor(this.pos.x / this.TILESIZE);
-    this.grid.y = Math.floor(this.pos.y / this.TILESIZE);
+    const newGridX = Math.floor(this.pos.x / this.TILESIZE);
+    const newGridY = Math.floor(this.pos.y / this.TILESIZE);
+    if (newGridX != this.grid.x || newGridY != this.grid.y) {
+      // send to server about position
+      this.grid.x = newGridX;
+      this.grid.y = newGridY;
+      return true;
+    }
+    else return false;
   }
   draw(camera, collisionMap) {
     // validity checks

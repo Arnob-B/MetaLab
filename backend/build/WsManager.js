@@ -66,6 +66,7 @@ class WsManager {
                 try {
                     let data = yield JSON.parse(message);
                     if (data.type === msgType_1.msgTypes.toServerPosUpdate) {
+                        console.log(data.body);
                         //@ts-ignore
                         this.playerPosCom(data.body);
                     }

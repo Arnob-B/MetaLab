@@ -7,7 +7,7 @@ import Monitor from "./monitor.js";
 import Hero from "./hero.js";
 import Entity from "./entity.js";
 export default class Game {
-  constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
+  constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera, wsMan }) {
     console.log("game constructed");
     this.camera = camera;
     this.canvasHeight = canvasHeight // in px
@@ -16,6 +16,8 @@ export default class Game {
     this.gameHeight = gameHeight // in px
     this.gameWidth = gameWidth // in px
     this.TILE_SIZE = TILE_SIZE // in px
+    this.wsMan = wsMan
+    console.log(this.wsMan)
     this.floorMap = new TileSet(gameWidth, gameHeight, "#floor2", [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -65,7 +67,7 @@ export default class Game {
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ]);
 
-    this.hero = new Hero(2, 4, this.collisionMap.arr);
+    this.hero = new Hero(2, 4, this.collisionMap.arr, this.wsMan.posUpdate.bind(this.wsMan));
     this.entity = new Entity();
 
     for (let a = 0; a < (this.gameWidth / this.TILE_SIZE); a++) {
@@ -94,7 +96,6 @@ export default class Game {
     //this.mon.isTouched(this.hero.obj.grid.x, this.hero.obj.grid.y);
     this.hero.checkInput(this.input.getKey);
     this.entity.checkHeroAndMonitor(this.hero, this.input.getKey);
-
   }
   render() {
     this.update();

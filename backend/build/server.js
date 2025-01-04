@@ -22,14 +22,16 @@ const express_1 = __importDefault(require("express"));
 const WsManager_1 = __importDefault(require("./WsManager"));
 const console_1 = require("console");
 const msgType_1 = require("./util/msgType");
-const httpServer = (0, express_1.default)().listen(3000, () => {
-    (0, console_1.log)("running at ", 3000);
+const PORT = 3001;
+const httpServer = (0, express_1.default)().listen(PORT, () => {
+    (0, console_1.log)("running at ", PORT);
 });
 const wsServer = new ws_1.WebSocketServer({
     server: httpServer
 });
 const wsMan = new WsManager_1.default();
 wsServer.on("connection", (socket) => {
+    console.log("got new connection");
     socket.on("message", (message) => __awaiter(void 0, void 0, void 0, function* () {
         const data = yield JSON.parse(message);
         if (data.type === msgType_1.msgTypes.toServerAddToRoom) {
