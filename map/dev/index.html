@@ -3,35 +3,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <div>
+  <div>
+  </div>
   <canvas id="mainCanvas">
   </canvas>
- </div>
+  <div id="textStatus"><div>
+  <div id="text-container">
+  </div>
   <div>
-    <div class="text-input-container">
-      <textarea class="text-area" placeholder="Enter your text here..."></textarea>
-      <div class="char-count">Characters: 0</div>
-      <button class="push-button">Push</button>
-    </div>
-    <div class="alert-box">yes nigga howdy?</div>
-  
-    <script>
-      const textarea = document.querySelector('.text-area');
-      const charCount = document.querySelector('.char-count');
-      const pushButton = document.querySelector('.push-button');
-      const alertBox = document.querySelector('.alert-box');
-  
-      textarea.addEventListener('input', () => {
-        charCount.textContent = `Characters: ${textarea.value.length}`;
-      });
-  
-      pushButton.addEventListener('click', () => {
-        alertBox.style.display = 'block';
-        setTimeout(() => {
-          alertBox.style.display = 'none';
-        }, 2000);
-      });
-    </script>
+    <select id="choice">
+    <option value="canvas" selected>canvas</option>
+    <option value="other">other</option>
+    </select>
+  </div>
+  <div>
     <h4>debug</h4>
     <h1>canvas</h1>
     <div id="canvasPops">
@@ -45,7 +30,6 @@
     <h1>INPUT</h1>
     <div id="inputLog">
     </div>
-
   </div>
 </body>
 <div>
@@ -59,6 +43,9 @@
   <img src="./table.png" id="tableTile" style="display:none;"></img>
   <img src="./wallpaper.jpg" id="wallpaper" style="display:none;"></img>
   <img src="./assets/spritesheet.png" id="player" alt="player" style="display: none;">
+  <img src="./assets/rgbStrip.png" id="rgbStrip" alt="rgbStrip" style="display: none; opacity: 0.2;">
+  <img src="./assets/Fire.png" id="fire" alt="fire" style="display: none;">
+  <img src="./assets/finalMon.png" id="mon" alt="mon" style="display: none;">
 </div>
 <script src = "main.js" type="module"></script>
 </html>

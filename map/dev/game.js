@@ -1,17 +1,21 @@
-import Input from "./keyInput.js"
-import TileSet from "./TileSet.js";
-import Camera from "./camera.js";
-import Player from "./player.js";
-import CollisionMap from "./CollisionMap.js";
+import Input from "../lib/keyInput.js"
+import TileSet from "../lib/TileSet.js";
+import CollisionMap from "../lib/CollisionMap.js";
+import GameObject from "../lib/GameObject.js"
+import DynamicOjbects from "../lib/DynamicObject.js";
+import Monitor from "./monitor.js";
+import Hero from "./hero.js";
+import Entity from "./entity.js";
 export default class Game {
-  constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE }) {
+  constructor({ canvasWidth, canvasHeight, gameWidth, gameHeight, TILE_SIZE, camera }) {
     console.log("game constructed");
+    this.camera = camera;
     this.canvasHeight = canvasHeight // in px
     this.canvasWidth = canvasWidth // in px
+    this.input = new Input();
     this.gameHeight = gameHeight // in px
     this.gameWidth = gameWidth // in px
     this.TILE_SIZE = TILE_SIZE // in px
-    this.camera = new Camera(gameWidth, gameHeight, canvasWidth, canvasHeight);
     this.floorMap = new TileSet(gameWidth, gameHeight, "#floor2", [
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -49,49 +53,56 @@ export default class Game {
       [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
     ]);
     this.collisionMap = new CollisionMap(gameWidth, gameHeight, [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+      [1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     ]);
 
-    this.player = new Player(canvasHeight, canvasWidth);
+    this.hero = new Hero(2, 4, this.collisionMap.arr);
+    this.entity = new Entity();
 
-    this.input = new Input;
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowUp") this.camera.update(0, -1);
-      if (e.key === "ArrowDown") this.camera.update(0, 1);
-      if (e.key === "ArrowRight") this.camera.update(1, 0);
-      if (e.key === "ArrowLeft") this.camera.update(-1, 0);
-    })
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "w") { this.player.update(0, -1); }
-      if (e.key === "a") { this.player.update(-1, 0); }
-      if (e.key === "s") { this.player.update(0, 1); }
-      if (e.key === "d") { this.player.update(1, 0); }
-    })
-
+    for (let a = 0; a < (this.gameWidth / this.TILE_SIZE); a++) {
+      let x = Math.floor(Math.random() * 10) % 9;
+      let y = Math.floor(Math.random() * 10) % 9;
+      let mon = new Monitor(a, 0);
+      let choice = Math.floor(Math.random() * 10) % 2;
+      if (choice) {
+        mon.isLocked = 1;
+        mon.lockerId = Math.floor(Math.random() * 100) % 100;
+        mon.textArea.innerText = `you are not the owner`
+      }
+      this.entity.addMonitor(mon);
+      this.collisionMap.setCol(a, 0);
+    }
   }
-  drawGrid(ctx, size) {
+  drawGrid(size) {
     for (let row = 0; row < this.gameWidth; row += size) {
       for (let col = 0; col < this.gameWidth; col += size) {
-        ctx.strokeRect(col, row, col + size, row + size);
+        this.camera.ctx.strokeRect(col, row, col + size, row + size);
       }
     }
   }
-  render(ctx) {
-    //console.log(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight)
-    //this.camera.checkUpdate(this.input.getKey);
-    this.floorMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    this.chairMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    this.tableMap.draw(ctx, this.camera.x, this.camera.y, this.canvasWidth, this.canvasHeight);
-    this.player.draw(ctx, this.camera);
-    this.drawGrid(ctx, 32);
+  update() {
+    this.camera.checkUpdate(this.input.getKey);
+    //this.mon.isTouched(this.hero.obj.grid.x, this.hero.obj.grid.y);
+    this.hero.checkInput(this.input.getKey);
+    this.entity.checkHeroAndMonitor(this.hero, this.input.getKey);
+
+  }
+  render() {
+    this.update();
+    this.floorMap.draw(this.camera);
+    this.chairMap.draw(this.camera);
+    this.tableMap.draw(this.camera);
+    this.drawGrid(this.TILE_SIZE);
+    this.hero.render(this.camera, this.collisionMap.arr);
+    this.entity.render(this.camera, this.collisionMap.arr);
   }
 }

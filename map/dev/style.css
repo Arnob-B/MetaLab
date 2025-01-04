@@ -3,6 +3,7 @@
   margin: 2px;
   padding: 0px;
 }
+<<<<<<< HEAD:map/style.css
 body {
   justify-content: center;
   align-items: center;
@@ -92,3 +93,13 @@ body {
     opacity: 1;
   }
 }
+=======
+ #mainCanvas{
+  display: block;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  image-rendering: pixelated;
+}
+>>>>>>> origin/camera2.0:map/dev/style.css
