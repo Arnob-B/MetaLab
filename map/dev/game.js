@@ -76,7 +76,7 @@ export default class Game {
       if (choice) {
         mon.isLocked = 1;
         mon.lockerId = Math.floor(Math.random() * 100) % 100;
-        mon.textArea.innerText = "you are not the owner"
+        mon.textArea.innerText = `you are not the owner`
       }
       this.entity.addMonitor(mon);
       this.collisionMap.setCol(a, 0);
@@ -106,4 +106,3 @@ export default class Game {
     this.entity.render(this.camera, this.collisionMap.arr);
   }
 }
-

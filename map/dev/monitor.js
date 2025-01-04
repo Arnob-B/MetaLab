@@ -2,7 +2,9 @@ import GameObject from "../lib/GameObject.js";
 
 export default class Monitor {
   constructor(x, y) {
-    this.object = new GameObject("fire", x * 32, y * 32, 128, 128, 32, 32, 32);
+    this.object = new GameObject("mon", x * 32, y * 32, 192, 192, 24, 24, 32);
+    this.object.frameX = 0;
+    this.object.frameY = 0;
     this.fireAnimation = 0;
     this.isLocked = 0;
     this.lockerId = 0;
@@ -28,8 +30,8 @@ export default class Monitor {
     }
   }
   animate() {
-    this.object.frameY = 0;
-    this.object.maxFrameX = 7;
+    this.object.frameY = 1;
+    this.object.maxFrameX = 8;
     this.object.frameX = (this.object.frameX + 1) % this.object.maxFrameX;
   }
   isTouched(hero, keys) { // grid system
@@ -56,6 +58,7 @@ export default class Monitor {
       this.animate();
     }
     else {
+      this.object.frameY = 0;
       this.object.frameX = 0;
     }
     //this.object.checkEvent();
