@@ -1,99 +1,7 @@
-
 *{
   margin: 2px;
   padding: 0px;
 }
-<<<<<<< HEAD:map/style.css
-body {
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
-}
-
-.text-input-container {
-  width: 90%;
-  max-width: 600px;
-  padding: 25px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.text-area {
-  width: 100%;
-  height: 150px;
-  padding: 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  resize: none;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
-  font-family: inherit;
-}
-
-.text-area:focus {
-  outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
-}
-
-.text-area::placeholder {
-  color: #aaa;
-}
-
-.char-count {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #666;
-  text-align: right;
-}
-
-.push-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%;
-}
-
-.push-button:hover {
-  background-color: #357abd;
-}
-
-.alert-box {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 15px 30px;
-  background-color: #ff4444;
-  color: white;
-  border-radius: 6px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: none;
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from {
-    top: -50px;
-    opacity: 0;
-  }
-  to {
-    top: 20px;
-    opacity: 1;
-  }
-}
-=======
  #mainCanvas{
   display: block;
   padding-left: 0;
@@ -102,4 +10,3 @@ body {
   margin-right: auto;
   image-rendering: pixelated;
 }
->>>>>>> origin/camera2.0:map/dev/style.css
